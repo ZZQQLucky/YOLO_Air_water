@@ -34,7 +34,7 @@ import cv2
 import torch
 import torch.backends.cudnn as cudnn
 
-# 函数开头插入
+
 tt = time.time()
 
 FILE = Path(__file__).resolve()
@@ -174,8 +174,8 @@ def run(weights=ROOT / 'weight.pt',  # model.pt path(s)
 
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
-                        label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')      # 检测标签有置信度
-                        # label = None if hide_labels else (names[c] if hide_conf else f'{names[c]}')     # 检测标签没有置信度
+                        label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')      # Detecting labels with confidence level
+                        # label = None if hide_labels else (names[c] if hide_conf else f'{names[c]}')     # The detection label has no confidence level
                         annotator.box_label(xyxy, label, color=colors(c, True))
                         if save_crop:
                             save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
@@ -186,7 +186,7 @@ def run(weights=ROOT / 'weight.pt',  # model.pt path(s)
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
 
-            # 在检测视频时添加帧率检测
+            # Add frame rate detection when detecting videos
             # cv2.putText(im0, "FPS:{:.1f}".format(1. / (time.time() - tt)), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 235), 4)
             # tt = time.time()
 
@@ -226,7 +226,7 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/v5lite-s+Shuffle+GSConv+ShuffleAttention+Decoupled+QFocal_100_0.98扩充/weight/best_fp16.onnx', help='model path(s)')
     parser.add_argument('--source', type=str, default=ROOT / 'data/Jpg/test/1', help='file/dir/URL/glob, 0 for webcam')
-    # parser.add_argument('--source', type=str, default='streams.txt', help='source')  # 单网络多线程 实时检测
+    # parser.add_argument('--source', type=str, default='streams.txt', help='source')  # Single network multi-threaded real-time detection
     parser.add_argument('--data', type=str, default=ROOT / 'data/mydata.yaml', help='(optional) dataset.yaml path')
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.1, help='confidence threshold')
